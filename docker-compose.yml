@@ -4,7 +4,7 @@ services:
   loki:
     image: grafana/loki:latest
     ports:
-      - "3100:3100"
+      - "9100:3100"
     volumes:
       - ./loki/loki-config.yml:/etc/loki/local-config.yml
     networks:
@@ -26,24 +26,26 @@ services:
   grafana:
     image: grafana/grafana:latest
     ports:
-      - "3001:3000"
+      - "9001:3000"
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_BASIC_ENABLED=false
       - GF_AUTH_GITHUB_ENABLED=true
-      - GF_AUTH_GITHUB_CLIENT_ID=XXXX
-      - GF_AUTH_GITHUB_CLIENT_SECRET=XXXX
+      - GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL}
+      - GF_SERVER_DOMAIN=${GF_SERVER_DOMAIN}
+      - GF_AUTH_GITHUB_CLIENT_ID=${GF_AUTH_GITHUB_CLIENT_ID}
+      - GF_AUTH_GITHUB_CLIENT_SECRET=${GF_AUTH_GITHUB_CLIENT_SECRET}
       - GF_AUTH_GITHUB_SCOPES=user:email,read:org
       - GF_AUTH_GITHUB_AUTH_URL=https://github.com/login/oauth/authorize
       - GF_AUTH_GITHUB_TOKEN_URL=https://github.com/login/oauth/access_token
       - GF_AUTH_GITHUB_API_URL=https://api.github.com/user
-      - GF_SERVER_ROOT_URL=https://cunning-helped-crab.ngrok-free.app
-      - GF_SERVER_DOMAIN=cunning-helped-crab.ngrok-free.app
       - GF_AUTH_GITHUB_ALLOW_SIGN_UP=true
+      - GF_AUTH_GITHUB_ALLOWED_ORGANIZATIONS=${GITHUB_ORGANIZATION}
+      - GF_AUTH_GITHUB_ROLE_ATTRIBUTE_PATH=[login=='ps428' || login=='other_github_id'] && 'Admin' || 'Viewer'
     depends_on:
       - loki
     networks:
       - monitoring
+
 
   backend:
     build:

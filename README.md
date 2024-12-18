@@ -30,7 +30,7 @@ sudo systemctl start docker
 docker-compose up --build -d
 ```
 
-### Or just check the [Makefile](./Makefile) 
+### Or just check the [Makefile](./Makefile) :moai:
 
 3. Go to [`http://localhost:3001/login`](http://localhost:3001/login) to open the Grafana GUI.
     - Login with using the default user name `admin` and password `admin`. Set the new password on the prompted page. ![Admin login](./screenshots/admin.png)

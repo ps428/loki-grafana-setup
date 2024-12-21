@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Page1() {
   useEffect(() => {
-    console.log("Frontend root page rendered");
+    console.log("Frontend Ping rendered");
   }, []);
 
   const pageStyles = {
-    backgroundColor: "#f0f8ff",
+    backgroundColor: "#ffebcd",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
@@ -14,13 +15,13 @@ export default function Home() {
   };
 
   const textStyles = {
-    color: "#ff6347", 
+    color: "#4682b4",
     fontSize: "3rem",
   };
 
   return (
     <div style={pageStyles}>
-      <h1 style={textStyles}>Welcome to the Frontend</h1>
+      <h1 style={textStyles}>Ping - Pong</h1>
     </div>
   );
 }
